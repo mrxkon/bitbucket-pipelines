@@ -1,0 +1,3 @@
+/.*
+bitbucket-pipelines.yml
+excludes.txt

@@ -1,0 +1,23 @@
+pipelines:
+  custom:
+    production_manual:
+      - step:
+          script:
+            - rsync -zrSlh -v --stats --progress --delete --exclude-from=excludes.txt $BITBUCKET_CLONE_DIR/themes/ $PRODUCTION_SSH_USER@$PRODUCTION_HOST:$PRODUCTION_FOLDER/themes/
+            - rsync -zrSlh -v --stats --progress --delete --exclude-from=excludes.txt $BITBUCKET_CLONE_DIR/plugins/ $PRODUCTION_SSH_USER@$PRODUCTION_HOST:$PRODUCTION_FOLDER/plugins/
+    staging_manual:
+      - step:
+          script:
+            - rsync -zrSlh -v --stats --progress --delete --exclude-from=excludes.txt $BITBUCKET_CLONE_DIR/themes/ $STAGING_SSH_USER@$STAGING_HOST:$STAGING_FOLDER/themes/
+            - rsync -zrSlh -v --stats --progress --delete --exclude-from=excludes.txt $BITBUCKET_CLONE_DIR/plugins/ $STAGING_SSH_USER@$STAGING_HOST:$STAGING_FOLDER/plugins/
+  branches:
+    production:
+      - step:
+          script:
+            - rsync -zrSlh -v --stats --progress --delete --exclude-from=excludes.txt $BITBUCKET_CLONE_DIR/themes/ $PRODUCTION_SSH_USER@$PRODUCTION_HOST:$PRODUCTION_FOLDER/themes/
+            - rsync -zrSlh -v --stats --progress --delete --exclude-from=excludes.txt $BITBUCKET_CLONE_DIR/plugins/ $PRODUCTION_SSH_USER@$PRODUCTION_HOST:$PRODUCTION_FOLDER/plugins/
+    staging:
+      - step:
+          script:
+            - rsync -zrSlh -v --stats --progress --delete --exclude-from=excludes.txt $BITBUCKET_CLONE_DIR/themes/ $STAGING_SSH_USER@$STAGING_HOST:$STAGING_FOLDER/themes/
+            - rsync -zrSlh -v --stats --progress --delete --exclude-from=excludes.txt $BITBUCKET_CLONE_DIR/plugins/ $STAGING_SSH_USER@$STAGING_HOST:$STAGING_FOLDER/plugins/

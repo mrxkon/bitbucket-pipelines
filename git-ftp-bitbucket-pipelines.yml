@@ -1,0 +1,29 @@
+image: samueldebruyn/debian-git
+
+pipelines:
+  custom:
+    production_manual:
+      - step:
+          script:
+            - apt-get update
+            - apt-get -qq install git-ftp
+            - git ftp push --auto-init -v -u "$PRODUCTION_USER" -p "$PRODUCTION_PASS" --syncroot $BITBUCKET_CLONE_DIR --remote-root $PRODUCTION_FOLDER sftp://$PRODUCTION_HOST:22
+    staging_manual:
+      - step:
+          script:
+            - apt-get update
+            - apt-get -qq install git-ftp
+            - git ftp push --auto-init -v -u "$STAGING_USER" -p "$STAGING_PASS" --syncroot $BITBUCKET_CLONE_DIR --remote-root $STAGING_FOLDER sftp://$STAGING_HOST:22
+  branches:
+      production:
+      - step:
+          script:
+            - apt-get update
+            - apt-get -qq install git-ftp
+            - git ftp push --auto-init -v -u "$PRODUCTION_USER" -p "$PRODUCTION_PASS" --syncroot $BITBUCKET_CLONE_DIR --remote-root $PRODUCTION_FOLDER sftp://$PRODUCTION_HOST:22
+      staging:
+      - step:
+          script:
+            - apt-get update
+            - apt-get -qq install git-ftp
+            - git ftp push --auto-init -v -u "$STAGING_USER" -p "$STAGING_PASS" --syncroot $BITBUCKET_CLONE_DIR --remote-root $STAGING_FOLDER sftp://$STAGING_HOST:22
